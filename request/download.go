@@ -29,3 +29,9 @@ func download(url string, path string) {
 
 	file.Write(body)
 }
+
+func downLoadAll(url []string, path string) {
+	for _, v := range url {
+		download(v, path)
+	}
+}

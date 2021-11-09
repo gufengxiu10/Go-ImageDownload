@@ -1,12 +1,10 @@
 package main
 
-import (
-	"img/request"
-)
+import "img/request"
 
 func main() {
-	var b request.WallhavenApi = new(request.WallhavenSend)
-	b.Search("FGO")
+	var b request.PixivizInterface = new(request.PixivizStruct)
+	b.Rand()
 
 	// client := &http.Client{}
 

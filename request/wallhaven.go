@@ -35,22 +35,12 @@ func (b *WallhavenSend) Random() {
 		log.Fatal(err)
 	}
 
-	doc.Find(".thumb-listing-page figure").Each(func(i int, s *goquery.Selection) {
-		url, _ := s.Find("img").Attr("data-src")
-		urlMap := strings.Split(url, "/")
-		currentUrl := urlMap[len(urlMap)-1]
-		if s.Find(".png").Text() != "" {
-			currentUrl = strings.Replace(currentUrl, "jpg", "png", 1)
-		}
-
-		allUrl := b.join(currentUrl)
-		download(allUrl, path)
-	})
+	downLoadAll(b.imgUrl(doc), path)
 }
 
 func (b *WallhavenSend) Search(key string) {
 
-	path := "image/wallhaven/search/" + key
+	path := "image/wallhaven/search/" + strings.ToLower(key)
 	os.MkdirAll(path, 0775)
 
 	client, err := http.Get("https://wallhaven.cc/search?q=" + key + "&page=1")
@@ -64,17 +54,7 @@ func (b *WallhavenSend) Search(key string) {
 		log.Fatal(err)
 	}
 
-	doc.Find(".thumb-listing-page figure").Each(func(i int, s *goquery.Selection) {
-		url, _ := s.Find("img").Attr("data-src")
-		urlMap := strings.Split(url, "/")
-		currentUrl := urlMap[len(urlMap)-1]
-		if s.Find(".png").Text() != "" {
-			currentUrl = strings.Replace(currentUrl, "jpg", "png", 1)
-		}
-
-		allUrl := b.join(currentUrl)
-		download(allUrl, path)
-	})
+	downLoadAll(b.imgUrl(doc), path)
 }
 
 func (b *WallhavenSend) prefix(url string) string {
@@ -85,4 +65,22 @@ func (b *WallhavenSend) join(url string) string {
 	allUrlSlice := []string{"https://w.wallhaven.cc/full/", b.prefix(url), "/wallhaven-", url}
 	allUrl := strings.Join(allUrlSlice, "")
 	return allUrl
+}
+
+func (b *WallhavenSend) imgUrl(doc *goquery.Document) []string {
+	var urlA []string = make([]string, 0)
+
+	doc.Find(".thumb-listing-page figure").Each(func(i int, s *goquery.Selection) {
+		url, _ := s.Find("img").Attr("data-src")
+		urlMap := strings.Split(url, "/")
+		currentUrl := urlMap[len(urlMap)-1]
+		if s.Find(".png").Text() != "" {
+			currentUrl = strings.Replace(currentUrl, "jpg", "png", 1)
+		}
+
+		allUrl := b.join(currentUrl)
+		urlA = append(urlA, allUrl)
+	})
+
+	return urlA
 }
