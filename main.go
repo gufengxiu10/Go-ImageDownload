@@ -1,10 +1,13 @@
 package main
 
-import "img/request"
+// import "img/request"
+
+import "img/lib/img/pixiviz"
 
 func main() {
-	var b request.PixivizInterface = new(request.PixivizStruct)
-	b.Rand()
+	pixiviz.Main()
+	// var b request.PixivizInterface = new(request.PixivizStruct)
+	// b.Rand()
 
 	// client := &http.Client{}
 

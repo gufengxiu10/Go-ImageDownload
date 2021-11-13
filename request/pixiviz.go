@@ -22,10 +22,6 @@ type MyRoundTripper struct {
 	r http.RoundTripper
 }
 
-type illusts struct {
-	meta_pages []map[string]map[string]string
-}
-
 func (mrt MyRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
 	r.Header.Add("Referer", "https://pixiviz.pwp.app/")
 	r.Header.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36 Edg/95.0.1020.44")
