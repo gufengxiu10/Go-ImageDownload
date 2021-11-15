@@ -1,34 +1,25 @@
 package main
 
-// import "img/request"
-
-import "img/lib/img/pixiviz"
+import (
+	"fmt"
+	"sort"
+)
 
 func main() {
-	pixiviz.Main()
-	// var b request.PixivizInterface = new(request.PixivizStruct)
-	// b.Rand()
+	var map1 map[string]int = make(map[string]int)
 
-	// client := &http.Client{}
+	map1["c"] = 200
+	map1["a"] = 100
 
-	// for _, v := range url {
-	// 	fileNameSplit := strings.Split(v, "/")
-	// 	fileName := fileNameSplit[len(fileNameSplit)-1]
-	// 	_, err := os.Stat(fileName)
-	// 	if err == nil {
-	// 		continue
-	// 	}
+	var stringSlice []string = make([]string, 0)
 
-	// 	res, err := client.Get(v)
-	// 	if err != nil {
-	// 		continue
-	// 	}
+	for index := range map1 {
+		stringSlice = append(stringSlice, index)
+	}
 
-	// 	defer res.Body.Close()
+	sort.Slice(stringSlice, func(i, j int) bool {
+		return i > j
+	})
 
-	// 	body, _ := io.ReadAll(res.Body)
-	// 	img, _ := os.Create(fileName)
-	// 	defer img.Close()
-	// 	img.Write(body)
-	// }
+	fmt.Println(stringSlice)
 }
